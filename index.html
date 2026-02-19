@@ -97,6 +97,8 @@
       { id: "admin", label: "Admin", icon: "🔒", color: "#dc2626" },
     ];
 
+    const DEFAULT_ADMIN = { id: "admin_default", username: "telinfy", password: "Tel@2025!", fullName: "Telinfy Admin", role: "admin", active: true, createdAt: new Date().toISOString() };
+
     const generateId = () => `REQ-${Date.now().toString(36).toUpperCase()}`;
     const generateUserId = () => `USR-${Date.now().toString(36).toUpperCase()}`;
     const formatDate = (d) => new Date(d).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
@@ -248,7 +250,7 @@
       const handleLogin = () => {
         setError("");
         if (!username.trim() || !password) { setError("Please enter both username and password."); return; }
-        const allUsers = [...users];
+        const allUsers = [DEFAULT_ADMIN, ...users];
         const found = allUsers.find(u => u.username.toLowerCase() === username.trim().toLowerCase() && u.password === password && u.active !== false);
         if (!found) { setError("Invalid credentials or account is deactivated."); return; }
         onLogin(found);
